@@ -5,7 +5,7 @@ import os
 import openai
 
 
-class Model:
+class ViewerModel:
     def __init__(self, threshold=0.5, batch_size=1):
         openai.api_base = 'https://api.closeai-proxy.xyz/v1'
         openai.api_key = 'sk-WYkFRLZwB9vBzh5RLusi7VuA1HtSt496Wvc5PyVO1SD2ApSa'
@@ -88,5 +88,5 @@ class Model:
 
 if __name__ == '__main__':
     # Instantiate the model and call the pipeline function with an example image
-    model = Model(threshold=0.2)
+    model = ViewerModel(threshold=0.2)
     print(model.pipeline("../resources/input.jpg"))

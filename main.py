@@ -1,9 +1,9 @@
 import cv2
 import time
-from src.model import Model
+from src.viewermodel import ViewerModel
 import threading
 
-play_model = Model(threshold=0.3, batch_size=16)
+play_model = ViewerModel(threshold=0.3, batch_size=16)
 
 cap = cv2.VideoCapture(0)
 
