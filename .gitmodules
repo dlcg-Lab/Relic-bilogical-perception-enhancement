@@ -1,0 +1,3 @@
+[submodule "deepdanbooru_onnx"]
+	path = deepdanbooru_onnx
+	url = https://github.com/chinoll/deepdanbooru_onnx.git
