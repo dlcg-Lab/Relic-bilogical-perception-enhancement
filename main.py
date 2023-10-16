@@ -12,13 +12,13 @@ last_capture_time = 0
 
 def display_camera():
     while True:
-        # 获取当前画面
+        # Read frame from camera
         ret, frame = cap.read()
         if ret:
-            # 显示画面
+            # Display the frame
             cv2.imshow('frame', frame)
 
-        # 检测是否按下 'q' 键退出
+        # Exit if 'q' key is pressed
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
@@ -29,35 +29,38 @@ def pipeline_task():
         current_time = time.time()
         ret, frame = cap.read()
         if ret:
+            # Save the frame as an image
             cv2.imwrite('./resources/input.jpg', frame)
+            # Process the image using the model
             answer = play_model.pipeline('./resources/input.jpg')
 
-            # 检查answer内参数数量
             while len(answer) < 1:
+                # Retry processing if no answer is obtained
                 answer = play_model.pipeline('./resources/input.jpg')
 
+            # Print the answer
             print(answer)
 
             last_capture_time = current_time
 
 
 def run_threads():
-    # 创建两个线程
+    # Create and start threads for camera display and pipeline tasks
     display_thread = threading.Thread(target=display_camera)
     pipeline_thread = threading.Thread(target=pipeline_task)
 
-    # 启动线程
     display_thread.start()
     pipeline_thread.start()
 
-    # 等待线程结束
+    # Wait for both threads to finish
     display_thread.join()
     pipeline_thread.join()
 
 
 if __name__ == "__main__":
+    # Run the threads
     run_threads()
 
-    # 释放资源
+    # Release the camera and close all windows
     cap.release()
     cv2.destroyAllWindows()
